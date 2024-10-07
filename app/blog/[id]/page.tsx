@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import LandingHeaderSection from "@/app/components/landing/Header";
-import BlockRendererClient from "@/app/components/BlockRenderClient";
+// import BlockRendererClient from "@/app/components/BlockRenderClient";
 import Loading from "@/app/components/Loading";
+import { FaArrowLeft } from "react-icons/fa";
 
 import { getClient } from "@/lib/sanity/client";
 import { articleQuery } from "@/lib/sanity/queries";
@@ -21,6 +22,11 @@ interface BlogPost {
     };
   };
   publishedAt: string;
+  readTime: number;
+  category: {
+    title: string;
+    slug: string;
+  };
 }
 
 const Blog = () => {
@@ -28,21 +34,18 @@ const Blog = () => {
   const [blogData, setBlogData] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchBlogData = async () => {
       setIsLoading(true);
       try {
-        console.log("blogID:::", blogID);
-        // Fetch blog data here
-        // Replace this with your actual data fetching logic
         const res = await getClient(false).fetch(articleQuery, {
           slug: blogID,
         });
 
         console.log("object:::", res);
 
-        // const data = await res.json();
         setBlogData(res[0]);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred while fetching the blog post");
@@ -61,7 +64,11 @@ const Blog = () => {
   return (
     <div className="w-full">
       <LandingHeaderSection />
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-32">
+        <button onClick={() => router.back()} className="mb-4 text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center">
+          <FaArrowLeft className="h-5 w-5 mr-2" />
+          Back
+        </button>
         <article className="prose lg:prose-xl">
           <h1 className="text-4xl font-bold mb-4">{blogData.title}</h1>
           <p className="text-gray-600 mb-4">{blogData.description}</p>
@@ -74,8 +81,12 @@ const Blog = () => {
               className="w-full h-auto object-cover rounded-lg shadow-md"
             />
           </div>
-          <div className="text-gray-600 mb-8">
+          <div className="text-gray-600 mb-4 flex justify-between items-center">
             <span>Published on {new Date(blogData.publishedAt).toLocaleDateString()}</span>
+            <span>{blogData.readTime} min read</span>
+          </div>
+          <div className="mb-8">
+            <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">{blogData.category.title}</span>
           </div>
           <div className="text-gray-800 leading-relaxed">
             <SanityContent content={blogData.content} />
