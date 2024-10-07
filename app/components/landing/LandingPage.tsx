@@ -14,12 +14,6 @@ const LandingPage: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    company: "",
-    email: "",
-  });
-
   const [blogs, setBlogs] = useState([]);
 
   const handleScroll = useCallback(() => {
