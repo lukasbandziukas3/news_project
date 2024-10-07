@@ -16,7 +16,7 @@ const LandingHeroSection = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 sm:mb-6">
               Stay Informed with Our News Project
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl max-w-3xl mx-auto mb-8 sm:mb-10">
+            <p className="text-lg sm:text-xl md:text-2xl mx-auto mb-8 sm:mb-10">
               Get the latest updates and insights from our comprehensive news
               coverage
             </p>
@@ -27,7 +27,9 @@ const LandingHeroSection = () => {
               >
                 Get Started
               </Link>
-              <p className="text-sm text-gray-300">Free trial available</p>
+              <p className="text-base text-white font-medium">
+                Free trial available
+              </p>
             </div>
           </div>
         </div>
