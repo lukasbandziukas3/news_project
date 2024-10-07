@@ -99,7 +99,9 @@ const Blog = () => {
               {blogData.category.title}
             </span>
           </div>
-          <div className="text-gray-800 leading-relaxed"></div>
+          <div className="text-gray-800 leading-relaxed">
+            <SanityContent content={blogData.content} />
+          </div>
         </article>
       </div>
     </div>
