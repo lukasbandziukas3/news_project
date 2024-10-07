@@ -48,7 +48,11 @@ const Blog = () => {
 
         setBlogData(res[0]);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred while fetching the blog post");
+        setError(
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching the blog post"
+        );
       } finally {
         setIsLoading(false);
       }
@@ -65,7 +69,10 @@ const Blog = () => {
     <div className="w-full">
       <LandingHeaderSection />
       <div className="max-w-3xl mx-auto px-4 py-32">
-        <button onClick={() => router.back()} className="mb-4 text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center">
+        <button
+          onClick={() => router.back()}
+          className="mb-4 text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center"
+        >
           <FaArrowLeft className="h-5 w-5 mr-2" />
           Back
         </button>
@@ -82,15 +89,17 @@ const Blog = () => {
             />
           </div>
           <div className="text-gray-600 mb-4 flex justify-between items-center">
-            <span>Published on {new Date(blogData.publishedAt).toLocaleDateString()}</span>
+            <span>
+              Published on {new Date(blogData.publishedAt).toLocaleDateString()}
+            </span>
             <span>{blogData.readTime} min read</span>
           </div>
           <div className="mb-8">
-            <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">{blogData.category.title}</span>
+            <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">
+              {blogData.category.title}
+            </span>
           </div>
-          <div className="text-gray-800 leading-relaxed">
-            <SanityContent content={blogData.content} />
-          </div>
+          <div className="text-gray-800 leading-relaxed"></div>
         </article>
       </div>
     </div>

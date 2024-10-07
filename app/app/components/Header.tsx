@@ -13,7 +13,7 @@ import {
   watchlistAtom,
   isSidebarExpandedAtom,
 } from "@/utils/atoms";
-import { CompanySearchbar, Logo } from "@/app/components";
+import { Logo } from "@/app/components";
 import { getMixPanelClient } from "@/utils/mixpanel";
 
 const Header: React.FC = () => {
@@ -149,14 +149,7 @@ const Header: React.FC = () => {
           />
         </div>
 
-        <div className="relative w-full sm:w-[300px] lg:w-[400px] xl:w-[700px] mb-4 sm:mb-0 h-10">
-          <CompanySearchbar
-            type="header"
-            isSearchBarOpen={true}
-            setIsSearchBarOpen={() => {}}
-            setWatchlistCompanies={() => {}}
-          />
-        </div>
+        <div className="relative w-full sm:w-[300px] lg:w-[400px] xl:w-[700px] mb-4 sm:mb-0 h-10"></div>
 
         <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-end">
           <div

@@ -13,7 +13,6 @@ import {
   IoChevronForwardOutline,
 } from "react-icons/io5";
 import { watchlistAtom, isSidebarExpandedAtom } from "@/utils/atoms";
-import WatchlistModal from "@/app/components/WatchlistModal";
 import Image from "next/image";
 import { Logo } from "@/app/components";
 import { getMixPanelClient } from "@/utils/mixpanel";
@@ -92,12 +91,6 @@ const Sidebar: React.FC = () => {
           setIsExpanded={setIsExpanded}
         />
       </nav>
-
-      <WatchlistModal
-        type="add"
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
     </>
   );
 };

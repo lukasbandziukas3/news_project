@@ -1,6 +1,5 @@
 "use client";
 
-import { PrelineScript } from "./components";
 import Script from "next/script";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -44,7 +43,6 @@ export default function RootLayout({
           </ToastProvider>
         </AuthProvider>
       </body>
-      <PrelineScript />
     </html>
   );
 }
