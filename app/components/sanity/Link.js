@@ -1,4 +1,4 @@
-import CustomLink from "@/components/CustomLink";
+import CustomLink from "./CustomLink";
 
 export default function SanityLink(props) {
   const { value, text } = props;
