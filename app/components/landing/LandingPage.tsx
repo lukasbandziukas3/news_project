@@ -4,6 +4,9 @@ import LandingHeaderSection from "./Header";
 import LandingHeroSection from "./HeroSection";
 import LandingNewsSection from "./NewsSection";
 
+import { getClient, sanityClient } from "@/lib/sanity/client";
+import { allPostQuery } from "@/lib/sanity/queries";
+
 interface FormData {
   name: string;
   company: string;
@@ -37,22 +40,15 @@ const LandingPage: React.FC = () => {
     }
   };
 
-  // const getBlogData = async () => {
-  //   const strapiUrl =
-  //     process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-  //   const res = await fetch(`${strapiUrl}/api/blogs?populate=*`);
-  //   const posts = await res.json();
-  //   if (!process.env.NEXT_PUBLIC_STRAPI_URL) {
-  //     console.warn(
-  //       "STRAPI_URL is not defined in the environment variables. Using default: http://localhost:1337"
-  //     );
-  //   }
-  //   setBlogs(posts.data);
-  // };
+  const getBlogData = async () => {
+    const res = await getClient(false).fetch(allPostQuery);
 
-  // useEffect(() => {
-  //   getBlogData();
-  // }, []);
+    setBlogs(res);
+  };
+
+  useEffect(() => {
+    getBlogData();
+  }, []);
 
   return (
     <div className="relative w-full text-black min-h-screen overflow-x-hidden bg-transparent">
@@ -69,7 +65,7 @@ const LandingPage: React.FC = () => {
 
         <main className="">
           <LandingHeroSection />
-          {/* <LandingNewsSection blogs={blogs} /> */}
+          <LandingNewsSection blogs={blogs} />
         </main>
       </div>
     </div>
