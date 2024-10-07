@@ -7,18 +7,20 @@ import LandingHeaderSection from "@/app/components/landing/Header";
 import BlockRendererClient from "@/app/components/BlockRenderClient";
 import Loading from "@/app/components/Loading";
 
+import { getClient } from "@/lib/sanity/client";
+import { articleQuery } from "@/lib/sanity/queries";
+import SanityContent from "@/app/components/sanity/Base";
+
 interface BlogPost {
   title: string;
   description: string;
-  body: Array<any>;
-  cover: {
-    data: {
-      attributes: {
-        url: string;
-      };
+  content: Array<any>;
+  thumbnail: {
+    asset: {
+      url: string;
     };
   };
-  createdAt: string;
+  publishedAt: string;
 }
 
 const Blog = () => {
@@ -31,26 +33,19 @@ const Blog = () => {
     const fetchBlogData = async () => {
       setIsLoading(true);
       try {
-        const strapiUrl =
-          process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-        if (!process.env.NEXT_PUBLIC_STRAPI_URL) {
-          console.warn(
-            "STRAPI_URL is not defined in the environment variables. Using default: http://localhost:1337"
-          );
-        }
-        const res = await fetch(
-          `${strapiUrl}/api/blogs/?filters\[slug][$eq]=${blogID}&populate=*`
-        );
-        if (!res.ok) throw new Error("Failed to fetch blog data");
+        console.log("blogID:::", blogID);
+        // Fetch blog data here
+        // Replace this with your actual data fetching logic
+        const res = await getClient(false).fetch(articleQuery, {
+          slug: blogID,
+        });
 
-        const { data } = await res.json();
-        setBlogData(data[0].attributes);
+        console.log("object:::", res);
+
+        // const data = await res.json();
+        setBlogData(res[0]);
       } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "An error occurred while fetching the blog post"
-        );
+        setError(err instanceof Error ? err.message : "An error occurred while fetching the blog post");
       } finally {
         setIsLoading(false);
       }
@@ -59,34 +54,20 @@ const Blog = () => {
     fetchBlogData();
   }, [blogID]);
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Loading />
-      </div>
-    );
-  if (error)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Error: {error}
-      </div>
-    );
-  if (!blogData)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        No blog post found
-      </div>
-    );
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error: {error}</div>;
+  if (!blogData) return <div>No blog post found</div>;
 
   return (
     <div className="w-full">
       <LandingHeaderSection />
-      <div className="flex max-w-3xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         <article className="prose lg:prose-xl">
           <h1 className="text-4xl font-bold mb-4">{blogData.title}</h1>
+          <p className="text-gray-600 mb-4">{blogData.description}</p>
           <div className="mb-8">
             <Image
-              src={blogData.cover.data.attributes.url}
+              src={blogData.thumbnail.asset.url}
               alt={blogData.title}
               width={1000}
               height={500}
@@ -94,12 +75,10 @@ const Blog = () => {
             />
           </div>
           <div className="text-gray-600 mb-8">
-            <span>
-              Published on {new Date(blogData.createdAt).toLocaleDateString()}
-            </span>
+            <span>Published on {new Date(blogData.publishedAt).toLocaleDateString()}</span>
           </div>
           <div className="text-gray-800 leading-relaxed">
-            <BlockRendererClient content={blogData.body} />
+            <SanityContent content={blogData.content} />
           </div>
         </article>
       </div>
