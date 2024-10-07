@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@headlessui/react": "^2.1.1",
+    "@sanity/client": "^6.22.1",
     "@strapi/blocks-react-renderer": "^1.0.1",
     "@supabase/supabase-js": "^2.44.0",
     "@types/mixpanel-browser": "^2.50.0",
